@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>St Peter College of Education | Rwanda</title>
+    
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-navy: #0b3d91;
+            --primary-navy-dark: #082b66;
+            --accent-gold: #ffc107;
+            --light-bg: #f5f5f5;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* --- Navigation --- */
+        .navbar {
+            background-color: var(--primary-navy) !important;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        .navbar-brand {
+            font-weight: 700;
+            color: #fff !important;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .navbar-brand img { height: 45px; }
+        .nav-link {
+            color: rgba(255,255,255,0.9) !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--accent-gold) !important;
+        }
+        .btn-apply {
+            background-color: var(--accent-gold);
+            color: var(--primary-navy);
+            font-weight: 600;
+            border-radius: 25px;
+            padding: 8px 20px;
+            border: none;
+            transition: transform 0.2s;
+        }
+        .btn-apply:hover { transform: scale(1.05); background-color: #ffca2c; }
+
+        /* --- Hero Section --- */
+        .hero-section {
+            background: linear-gradient(rgba(11, 61, 145, 0.7), rgba(11, 61, 145, 0.7)), 
+                        url('https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            color: #fff;
+            position: relative;
+        }
+        .hero-title { font-size: 3.5rem; font-weight: 700; line-height: 1.1; }
+        .hero-subtitle { font-size: 1.2rem; max-width: 600px; }
+        .hero-buttons .btn { margin-right: 15px; border-radius: 5px; padding: 12px 25px; font-weight: 600; }
+        .location-badge {
+            background-color: #fff;
+            color: #333;
+            padding: 15px 20px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            position: absolute;
+            bottom: -40px;
+            right: 10%;
+        }
+
+        /* --- Sections --- */
+        .section-title { color: var(--primary-navy); font-weight: 700; position: relative; }
+        .section-title::after {
+            content: '';
+            width: 60px;
+            height: 4px;
+            background-color: var(--accent-gold);
+            display: block;
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+        .bg-light-custom { background-color: var(--light-bg); }
+
+        /* --- Cards & Hover Effects --- */
+        .program-card, .news-card, .stat-card, .mission-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+            height: 100%;
+        }
+        .program-card:hover, .news-card:hover, .mission-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        .program-icon {
+            font-size: 2.5rem;
+            color: var(--primary-navy);
+            background: #e9ecef;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+        .program-card .card-title { color: var(--primary-navy); font-weight: 600; }
+        .program-card .btn-outline-primary { border-color: var(--primary-navy); color: var(--primary-navy); }
+        .program-card .btn-outline-primary:hover { background-color: var(--primary-navy); color: #fff; }
+
+        /* --- Why Choose Us --- */
+        .why-choose-section {
+            background-color: var(--primary-navy-dark);
+            color: #fff;
+            padding: 60px 0;
+        }
+        .feature-box { text-align: center; padding: 20px; }
+        .feature-box i { font-size: 2.5rem; color: var(--accent-gold); margin-bottom: 15px; }
+        
+        /* --- Admissions / Forms --- */
+        .step-list .list-group-item {
+            border: none;
+            background: transparent;
+            padding-left: 0;
+            border-bottom: 1px solid #eee;
+        }
+        .step-list .step-number {
+            background-color: var(--primary-navy);
+            color: #fff;
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-right: 15px;
+        }
+        .form-control, .form-select { padding: 12px; border-radius: 8px; border: 1px solid #ced4da; }
+        .form-control:focus, .form-select:focus { border-color: var(--primary-navy); box-shadow: 0 0 0 0.25rem rgba(11, 61, 145, 0.25); }
+        .btn-primary-custom { background-color: var(--primary-navy); color: #fff; border: none; padding: 12px 30px; border-radius: 8px; transition: 0.3s;}
+        .btn-primary-custom:hover { background-color: var(--primary-navy-dark); }
+
+        /* --- Footer --- */
+        footer {
+            background-color: #1a1a1a;
+            color: #fff;
+            padding: 60px 0 20px;
+        }
+        footer h5 { color: var(--accent-gold); font-weight: 600; margin-bottom: 20px; }
+        footer ul { list-style: none; padding: 0; }
+        footer ul li { margin-bottom: 10px; }
+        footer ul li a { color: #ccc; text-decoration: none; transition: color 0.3s; }
+        footer ul li a:hover { color: var(--accent-gold); }
+        .social-icons a { color: #fff; font-size: 1.2rem; margin-right: 15px; transition: color 0.3s; }
+        .social-icons a:hover { color: var(--accent-gold); }
+
+        /* --- Utilities --- */
+        .page-section { display: none; padding-top: 80px; padding-bottom: 50px; min-height: 80vh; }
+        .page-section.active { display: block; animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Mobile responsive adjustments */
+        @media (max-width: 991px) {
+            .hero-title { font-size: 2.5rem; }
+            .location-badge { display: none; }
+        }
+        @media (max-width: 576px) {
+            .hero-section { height: 100vh; text-align: center; }
+            .hero-title { font-size: 2rem; }
+            .hero-buttons .btn { display: block; width: 100%; margin: 10px 0; }
+        }
+        
+        /* Google Maps */
+        .map-container { height: 400px; border-radius: 10px; overflow: hidden; }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#" onclick="showPage('home')">
+                <i class="bi bi-mortarboard-fill text-warning"></i>
+                St Peter College
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item"><a class="nav-link active" href="#" onclick="showPage('home')">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('about')">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('programs')">Programs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('admissions')">Admissions</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('news')">News</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('contact')">Contact</a></li>
+                    <li class="nav-item ms-lg-3">
+                        <button class="btn btn-apply" onclick="showPage('admissions')">Apply Now</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ================= HOME PAGE ================= -->
+    <section id="home" class="page-section active" style="padding-top: 0; padding-bottom: 0; min-height: auto;">
+        <!-- Hero -->
+        <div class="hero-section">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-7">
+                        <h5 class="text-warning text-uppercase fw-bold mb-3">Welcome to</h5>
+                        <h1 class="hero-title">Education.<br>Skills. Future.</h1>
+                        <p class="hero-subtitle my-4">St Peter College of Education is a leading institution committed to quality education, practical skills, and shaping a better future for students in Rwanda.</p>
+                        <div class="hero-buttons">
+                            <button class="btn btn-warning text-dark fw-bold" onclick="showPage('admissions')">Apply Now</button>
+                            <button class="btn btn-outline-light fw-bold" onclick="showPage('contact')">Contact Us</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="location-badge">
+                <i class="bi bi-geo-alt-fill text-danger fs-2"></i>
+                <div>
+                    <h6 class="fw-bold mb-0">Muhanga District,</h6>
+                    <small class="text-muted">Rwanda</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Programs Preview -->
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h5 class="text-warning fw-bold">OUR PROGRAMS</h5>
+                <h2 class="section-title">Quality Programs for a Bright Future</h2>
+                <p class="text-muted">Our curricula focus on practical skills and modern knowledge.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="card program-card p-4 text-center">
+                        <div class="program-icon mx-auto"><i class="bi bi-code-slash"></i></div>
+                        <h5 class="card-title">Software Development</h5>
+                        <p class="card-text text-muted small">Master coding, web development, and database management for the digital age.</p>
+                        <button class="btn btn-outline-primary btn-sm mt-auto" onclick="showPage('programs')">Learn More &rarr;</button>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card program-card p-4 text-center">
+                        <div class="program-icon mx-auto"><i class="bi bi-building"></i></div>
+                        <h5 class="card-title">Building Construction</h5>
+                        <p class="card-text text-muted small">Learn modern construction techniques, project management, and safety standards.</p>
+                        <button class="btn btn-outline-primary btn-sm mt-auto" onclick="showPage('programs')">Learn More &rarr;</button>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card program-card p-4 text-center">
+                        <div class="program-icon mx-auto"><i class="bi bi-calculator"></i></div>
+                        <h5 class="card-title">Accounting</h5>
+                        <p class="card-text text-muted small">Build strong foundations in financial accounting, auditing, and business management.</p>
+                        <button class="btn btn-outline-primary btn-sm mt-auto" onclick="showPage('programs')">Learn More &rarr;</button>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card program-card p-4 text-center">
+                        <div class="program-icon mx-auto"><i class="bi bi-book"></i></div>
+                        <h5 class="card-title">Education & Teaching</h5>
+                        <p class="card-text text-muted small">Become a professional teacher through quality training and teaching practice.</p>
+                        <button class="btn btn-outline-primary btn-sm mt-auto" onclick="showPage('programs')">Learn More &rarr;</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Why Choose Us -->
+        <div class="why-choose-section">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h5 class="text-warning fw-bold">WHY CHOOSE US</h5>
+                    <h2 class="fw-bold">Excellence in Education <br> and Training</h2>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-md-3 feature-box">
+                        <i class="bi bi-award"></i>
+                        <h6 class="fw-bold">Qualified Staff</h6>
+                        <small>Experienced and dedicated professionals.</small>
+                    </div>
+                    <div class="col-6 col-md-3 feature-box">
+                        <i class="bi bi-laptop"></i>
+                        <h6 class="fw-bold">Modern Facilities</h6>
+                        <small>Well-equipped classrooms, labs, and libraries.</small>
+                    </div>
+                    <div class="col-6 col-md-3 feature-box">
+                        <i class="bi bi-people"></i>
+                        <h6 class="fw-bold">Student Support</h6>
+                        <small>Guidance and support for every student.</small>
+                    </div>
+                    <div class="col-6 col-md-3 feature-box">
+                        <i class="bi bi-briefcase"></i>
+                        <h6 class="fw-bold">Career Focused</h6>
+                        <small>Preparing you for real-world success.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= ABOUT PAGE ================= -->
+    <section id="about" class="page-section">
+        <div class="container">
+            <div class="row align-items-center mb-5">
+                <div class="col-lg-6">
+                    <h5 class="text-warning fw-bold">ABOUT US</h5>
+                    <h2 class="section-title">Saint Peter College of Shyogwe</h2>
+                    <p class="mt-3">St Peter College of Education (Saint Peter College of Shyogwe) is a premier institution located in the heart of Muhanga District, Rwanda. We are committed to fostering academic excellence, vocational skills, and strong moral values among our students.</p>
+                    <p>Our history is rooted in a deep commitment to community development and providing accessible, high-quality education to the youth of Rwanda.</p>
+                </div>
+                <div class="col-lg-6 mt-4 mt-lg-0">
+                    <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Campus" class="img-fluid rounded-3 shadow">
+                </div>
+            </div>
+
+            <!-- Mission & Vision -->
+            <div class="row g-4 mb-5">
+                <div class="col-md-6">
+                    <div class="card mission-card p-4 border-start border-5 border-primary">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="bi bi-bullseye text-primary fs-1 me-3"></i>
+                            <h4 class="fw-bold mb-0">Mission</h4>
+                        </div>
+                        <p class="text-muted mb-0">To provide quality education and skills training that empowers students to become competent, responsible, and innovative leaders in their communities.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card mission-card p-4 border-start border-5 border-success">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="bi bi-eye text-success fs-1 me-3"></i>
+                            <h4 class="fw-bold mb-0">Vision</h4>
+                        </div>
+                        <p class="text-muted mb-0">To be a center of excellence in education and vocational training, recognized for producing world-class graduates who drive socio-economic development in Rwanda and beyond.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="row text-center bg-light-custom p-4 rounded-3">
+                <div class="col-6 col-md-3 mb-3 mb-md-0">
+                    <h3 class="fw-bold text-primary counter">200+</h3>
+                    <small>Students</small>
+                </div>
+                <div class="col-6 col-md-3 mb-3 mb-md-0">
+                    <h3 class="fw-bold text-primary counter">15+</h3>
+                    <small>Qualified Staff</small>
+                </div>
+                <div class="col-6 col-md-3 mb-3 mb-md-0">
+                    <h3 class="fw-bold text-primary counter">4</h3>
+                    <small>Programs</small>
+                </div>
+                <div class="col-6 col-md-3 mb-3 mb-md-0">
+                    <h3 class="fw-bold text-primary counter">100%</h3>
+                    <small>Commitment</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= PROGRAMS PAGE ================= -->
+    <section id="programs" class="page-section bg-light-custom">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h5 class="text-warning fw-bold">ACADEMIC PROGRAMS</h5>
+                <h2 class="section-title">Our Academic Programs</h2>
+                <p class="text-muted">Explore our diverse range of programs designed to meet the demands of the modern world.</p>
+            </div>
+            <div class="row g-4">
+                <!-- Software Dev -->
+                <div class="col-lg-6">
+                    <div class="card program-card p-4">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-3 text-center">
+                                <i class="bi bi-code-slash fs-1 text-primary"></i>
+                            </div>
+                            <div class="col-9">
+                                <h5 class="fw-bold mb-1">Software Development</h5>
+                                <p class="small text-muted mb-2">Learn programming, web technologies, and system development.</p>
+                                <span class="badge bg-primary">ICT</span> <span class="badge bg-secondary">Tech</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Construction -->
+                <div class="col-lg-6">
+                    <div class="card program-card p-4">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-3 text-center">
+                                <i class="bi bi-building fs-1 text-warning"></i>
+                            </div>
+                            <div class="col-9">
+                                <h5 class="fw-bold mb-1">Building Construction</h5>
+                                <p class="small text-muted mb-2">Master modern building techniques, architecture, and site management.</p>
+                                <span class="badge bg-warning text-dark">Vocational</span> <span class="badge bg-secondary">Engineering</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Accounting -->
+                <div class="col-lg-6">
+                    <div class="card program-card p-4">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-3 text-center">
+                                <i class="bi bi-calculator fs-1 text-success"></i>
+                            </div>
+                            <div class="col-9">
+                                <h5 class="fw-bold mb-1">Accounting</h5>
+                                <p class="small text-muted mb-2">Gain expertise in finance, auditing, and business administration.</p>
+                                <span class="badge bg-success">Business</span> <span class="badge bg-secondary">Finance</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Education -->
+                <div class="col-lg-6">
+                    <div class="card program-card p-4">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-3 text-center">
+                                <i class="bi bi-book fs-1 text-danger"></i>
+                            </div>
+                            <div class="col-9">
+                                <h5 class="fw-bold mb-1">Education & Teaching</h5>
+                                <p class="small text-muted mb-2">Develop pedagogical skills to become a highly effective teacher.</p>
+                                <span class="badge bg-danger">Teaching</span> <span class="badge bg-secondary">Humanities</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= ADMISSIONS PAGE ================= -->
+    <section id="admissions" class="page-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h5 class="text-warning fw-bold">ADMISSIONS</h5>
+                <h2 class="section-title">Admissions</h2>
+                <p class="text-muted">Join our vibrant community. Follow our simple admission process.</p>
+            </div>
+            
+            <div class="row g-5">
+                <!-- Process & Requirements -->
+                <div class="col-lg-6">
+                    <h5 class="fw-bold text-primary mb-3">How to Apply</h5>
+                    <ul class="list-group step-list mb-4">
+                        <li class="list-group-item"><span class="step-number">1</span> Choose your preferred program.</li>
+                        <li class="list-group-item"><span class="step-number">2</span> Fill out the online application form below.</li>
+                        <li class="list-group-item"><span class="step-number">3</span> Submit the required academic documents.</li>
+                        <li class="list-group-item"><span class="step-number">4</span> Attend the entrance interview/assessment.</li>
+                        <li class="list-group-item"><span class="step-number">5</span> Receive your acceptance letter and enroll.</li>
+                    </ul>
+
+                    <h5 class="fw-bold text-primary mb-3">Requirements</h5>
+                    <ul class="list-unstyled ps-2">
+                        <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Completed Application Form</li>
+                        <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Certified copies of previous transcripts</li>
+                        <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> 2 Passport-sized photos</li>
+                        <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Recommendation letters (optional)</li>
+                    </ul>
+                </div>
+
+                <!-- Application Form -->
+                <div class="col-lg-6">
+                    <div class="card p-4 shadow-sm">
+                        <h5 class="card-title fw-bold mb-4">Apply Online</h5>
+                        <form>
+                            <div class="mb-3">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" class="form-control" placeholder="Enter your full name">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email address</label>
+                                <input type="email" class="form-control" placeholder="name@example.com">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" placeholder="+250 78X XXX XXX">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Select Program</label>
+                                <select class="form-select">
+                                    <option selected>Choose a program...</option>
+                                    <option value="1">Software Development</option>
+                                    <option value="2">Building Construction</option>
+                                    <option value="3">Accounting</option>
+                                    <option value="4">Education & Teaching</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Message / Inquiry</label>
+                                <textarea class="form-control" rows="3" placeholder="Any additional details..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary-custom w-100">Submit Application</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= NEWS & EVENTS PAGE ================= -->
+    <section id="news" class="page-section bg-light-custom">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h5 class="text-warning fw-bold">NEWS & EVENTS</h5>
+                <h2 class="section-title">News & Events</h2>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card news-card">
+                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c7f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Event 1" style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-primary">News</span>
+                                <small class="text-muted">May 15, 2024</small>
+                            </div>
+                            <h5 class="card-title fw-bold">New Academic Year 2024-2025</h5>
+                            <p class="card-text small text-muted">St Peter College opens admissions for the upcoming academic year.</p>
+                            <button class="btn btn-sm btn-outline-primary mt-2">Read More</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card news-card">
+                        <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Event 2" style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-warning text-dark">Event</span>
+                                <small class="text-muted">June 10, 2024</small>
+                            </div>
+                            <h5 class="card-title fw-bold">Career Fair 2024</h5>
+                            <p class="card-text small text-muted">Connect with top employers and explore internship opportunities.</p>
+                            <button class="btn btn-sm btn-outline-primary mt-2">Read More</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card news-card">
+                        <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="Event 3" style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="badge bg-success">Event</span>
+                                <small class="text-muted">July 5, 2024</small>
+                            </div>
+                            <h5 class="card-title fw-bold">Graduation Ceremony</h5>
+                            <p class="card-text small text-muted">Celebrating the achievements of our graduating class of 2024.</p>
+                            <button class="btn btn-sm btn-outline-primary mt-2">Read More</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= CONTACT PAGE ================= -->
+    <section id="contact" class="page-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h5 class="text-warning fw-bold">GET IN TOUCH</h5>
+                <h2 class="section-title">Contact Us</h2>
+            </div>
+            <div class="row g-5">
+                <div class="col-lg-5">
+                    <h5 class="fw-bold mb-4">Send us a Message</h5>
+                    <form>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Your Name">
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" class="form-control" placeholder="Your Email">
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Subject">
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" rows="4" placeholder="Message"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary-custom w-100">Send Message</button>
+                    </form>
+
+                    <div class="mt-5 pt-4 border-top">
+                        <h5 class="fw-bold mb-3">Contact Details</h5>
+                        <p class="mb-2"><i class="bi bi-geo-alt-fill text-primary me-2"></i> Muhanga District, Rwanda</p>
+                        <p class="mb-2"><i class="bi bi-telephone-fill text-primary me-2"></i> +250 788 123 456</p>
+                        <p class="mb-2"><i class="bi bi-envelope-fill text-primary me-2"></i> admissions@stpetercollege.rw</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-7">
+                    <div class="map-container">
+                        <!-- Google Maps Embed for Muhanga, Rwanda -->
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31863.44449384219!2d29.7307412!3d-2.1425918!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19c429515b319c1b%3A0x4efd16dee70a730!2sMuhanga%2C%20Rwanda!5e0!3m2!1sen!2sus!4v1685300000000!5m2!1sen!2sus" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer>
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <a class="navbar-brand mb-3" href="#" onclick="showPage('home')">
+                        <i class="bi bi-mortarboard-fill text-warning"></i> St Peter College
+                    </a>
+                    <p class="small text-muted">Empowering the next generation of leaders in Muhanga District, Rwanda through quality education, practical skills, and strong community values.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-2">
+                    <h5>Quick Links</h5>
+                    <ul>
+                        <li><a href="#" onclick="showPage('about')">About Us</a></li>
+                        <li><a href="#" onclick="showPage('programs')">Programs</a></li>
+                        <li><a href="#" onclick="showPage('admissions')">Admissions</a></li>
+                        <li><a href="#" onclick="showPage('news')">News</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                    <h5>Contact Info</h5>
+                    <ul>
+                        <li><i class="bi bi-geo-alt me-2 text-warning"></i> Muhanga, Rwanda</li>
+                        <li><i class="bi bi-envelope me-2 text-warning"></i> info@stpetercollege.rw</li>
+                        <li><i class="bi bi-telephone me-2 text-warning"></i> +250 788 123 456</li>
+                    </ul>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                    <h5>Apply Now</h5>
+                    <p class="small text-muted">Start your journey with us today. Admissions are now open for the 2024-2025 academic year.</p>
+                    <button class="btn btn-warning text-dark fw-bold w-100" onclick="showPage('admissions')">Apply Now</button>
+                </div>
+            </div>
+            <div class="text-center border-top border-secondary pt-3 mt-4">
+                <small class="text-muted">&copy; 2024 St Peter College of Education. All Rights Reserved.</small>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS for Page Navigation -->
+    <script>
+        function showPage(pageId) {
+            // Hide all sections
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            // Show target section
+            const target = document.getElementById(pageId);
+            if(target) {
+                target.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            
+            // Update Active Nav State
+            document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            const activeNav = document.querySelector(`.navbar-nav .nav-link[onclick="showPage('${pageId}')"]`);
+            if(activeNav) activeNav.classList.add('active');
+        }
+    </script>
+
+</body>
+</html>

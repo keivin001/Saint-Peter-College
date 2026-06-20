@@ -1,0 +1,12 @@
+# robots.txt — St Peter College of Education
+# https://www.stpetercollege.rw
+
+User-agent: *
+Allow: /
+
+# Block access to raw source / draft files
+Disallow: /deepseek_html_20260620_861dd5.html
+Disallow: /.vscode/
+
+# Sitemap location
+Sitemap: https://www.stpetercollege.rw/sitemap.xml
