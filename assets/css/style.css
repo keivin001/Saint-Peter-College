@@ -114,8 +114,8 @@ body {
 .hero-section {
   position: relative;
   width: 100%;
-  height: 100dvh;          /* fills the device viewport exactly */
-  min-height: 560px;
+  height: 100dvh;
+  min-height: 640px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -131,14 +131,14 @@ body {
   position: absolute;
   inset: 0;
   background-size: cover;
-  background-position: center;
+  background-position: center center;
+  background-repeat: no-repeat;
   opacity: 0;
   transition: opacity 1.4s ease-in-out;
   transform: scale(1.04);
   animation: heroPan 18s ease-in-out infinite alternate;
   will-change: opacity, transform;
-  height: 80%;
-  /* width: 100%; */
+  height: 100%;
 }
 .hero-slide.active {
   opacity: 1;
@@ -151,7 +151,7 @@ body {
 /* Slide indicator dots */
 .hero-dots {
   position: absolute;
-  bottom: 125px;           /* just above the stats bar */
+  bottom: 132px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 4;
@@ -176,7 +176,6 @@ body {
 
 /* dark gradient overlay */
 .hero-overlay {
-  top: -5rem;
   position: absolute;
   inset: 0;
   background: linear-gradient(
@@ -194,8 +193,7 @@ body {
   flex: 1;
   display: flex;
   align-items: center;
-  padding: 20px 0 10px;     /* leave room for stats at bottom */
-  top: -4.5rem;
+  padding: 54px 0 150px;
 }
 
 /* Title eyebrow */
@@ -253,15 +251,16 @@ body {
 
 /* ── HERO STATS CARDS (bottom of hero) ─────── */
 .hero-stats {
-  position: relative;
+  position: absolute;
+  left: 0;
+  bottom: 0;
   z-index: 3;
   width: 100%;
-  /* margin-top: -5rem; */
-  top: -9rem;
-  border-radius: 1rem;
 }
 .hero-stats-row {
   border-top: 1px solid rgba(255,255,255,.12);
+  overflow: hidden;
+  border-radius: 16px 16px 0 0;
 }
 .hero-stat-card {
   padding: 15px 10px;
@@ -568,15 +567,27 @@ body {
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .team-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
 .team-photo {
-  width: 110px; height: 110px;
+  width: clamp(96px, 22vw, 120px);
+  height: clamp(96px, 22vw, 120px);
   border-radius: 50%;
   object-fit: cover;
   border: 4px solid var(--navy-light);
   display: block;
   margin: 0 auto;
+}
+.team-card h6 {
+  line-height: 1.25;
+}
+.team-card p {
+  max-width: 260px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .stats-section {
   background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
@@ -785,73 +796,6 @@ body {
 .rounded-top-4 { border-radius: var(--radius) var(--radius) 0 0 !important; }
 
 /* ── PAGE TRANSITION OVERLAY ───────────────── */
-#pageLoader {
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-  background: var(--navy);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 18px;
-  transition: opacity .45s ease, visibility .45s ease;
-}
-#pageLoader.hide {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-.loader-logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: #fff;
-  animation: loaderPulse 1.2s ease-in-out infinite;
-}
-.loader-logo i   { font-size: 2.6rem; color: var(--gold); }
-.loader-logo div span { display: block; font-size: 1.2rem; font-weight: 800; letter-spacing: 1px; }
-.loader-logo div small { font-size: .6rem; letter-spacing: 2px; color: rgba(255,255,255,.6); }
-@keyframes loaderPulse {
-  0%, 100% { opacity: 1;   transform: scale(1);    }
-  50%       { opacity: .75; transform: scale(.97); }
-}
-
-/* Progress bar that fills across the top */
-.loader-bar {
-  position: absolute;
-  top: 0; left: 0;
-  height: 3px;
-  background: var(--gold);
-  width: 0%;
-  animation: loaderProgress 0.9s cubic-bezier(.4,0,.2,1) forwards;
-  border-radius: 0 3px 3px 0;
-}
-@keyframes loaderProgress {
-  0%   { width: 0%; }
-  60%  { width: 75%; }
-  100% { width: 95%; }
-}
-
-/* Dot spinner below logo */
-.loader-dots {
-  display: flex;
-  gap: 8px;
-}
-.loader-dots span {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: rgba(255,255,255,.4);
-  animation: dotBounce .9s ease-in-out infinite;
-}
-.loader-dots span:nth-child(1) { animation-delay: 0s;    background: var(--gold); }
-.loader-dots span:nth-child(2) { animation-delay: .15s; }
-.loader-dots span:nth-child(3) { animation-delay: .3s;  }
-@keyframes dotBounce {
-  0%, 80%, 100% { transform: scale(1);   opacity: .4; }
-  40%           { transform: scale(1.4); opacity: 1;  }
-}
-
 /* ── BUTTON LOADING STATES ─────────────────── */
 /* Any .btn that is in a "loading" state */
 .btn.btn-loading {
@@ -882,6 +826,15 @@ body {
 }
 
 /* ── SCROLL TO TOP ─────────────────────────── */
+.btn.btn-success-state {
+  pointer-events: none;
+  position: relative;
+}
+.btn.btn-success-state i {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
 #scrollTop {
   position: fixed;
   bottom: 28px; right: 28px;
@@ -920,20 +873,32 @@ body {
   z-index: 999;
   text-decoration: none;
   transition: var(--transition);
-  animation: waPulse 2.4s ease-in-out infinite;
+  animation: waGreenGlow 1.9s ease-in-out infinite;
 }
 #whatsappBtn:hover {
   background: #1ebe5d;
   transform: scale(1.12);
-  box-shadow: 0 6px 24px rgba(37,211,102,.55);
+  box-shadow: 0 8px 30px rgba(37,211,102,.7);
   animation: none;
 }
-@keyframes waPulse {
-  0%, 100% { box-shadow: 0 4px 18px rgba(37,211,102,.45); }
-  50%       { box-shadow: 0 4px 28px rgba(37,211,102,.75); }
+@keyframes waGreenGlow {
+  0%, 100% {
+    box-shadow:
+      0 4px 18px rgba(37,211,102,.45),
+      0 0 0 0 rgba(37,211,102,.45);
+  }
+  50% {
+    box-shadow:
+      0 8px 32px rgba(37,211,102,.85),
+      0 0 0 14px rgba(37,211,102,0);
+  }
 }
 
 /* ── DARK / LIGHT MODE TOGGLE BUTTON ──────── */
+.mobile-footer-buttons {
+  display: none;
+}
+
 .btn-theme-toggle {
   width: 38px; height: 38px;
   border-radius: 50%;
@@ -1053,28 +1018,62 @@ body {
 
 /* ── RESPONSIVE ────────────────────────────── */
 @media (max-width: 991px) {
-  .hero-body  { padding: 10px 0 8px;  }
+  .hero-section { min-height: 690px; }
+  .hero-body  { padding: 42px 0 190px;  }
   .hero-title { font-size: 2.6rem; }
+  .hero-dots { bottom: 176px; }
   .img-badge  { display: none; }
   .hero-stat-card + .hero-stat-card::before { display: none; }
 }
 @media (max-width: 767px) {
   .py-section  { padding: 55px 0; }
-  .hero-subtitle { font-size: .95rem; margin-bottom: 24px; }
-  .hero-stat-card { padding: 16px 6px; }
-  .stat-number { font-size: 1.5rem; }
+  .hero-section {
+    height: calc(100dvh - 70px);
+    min-height: 620px;
+  }
+  .hero-body {
+    align-items: flex-start;
+    padding: 72px 0 170px;
+  }
+  .hero-stats { bottom: 34px; }
+  .hero-stats-row {
+    border-radius: 16px;
+    box-shadow: 0 14px 34px rgba(0,0,0,.18);
+  }
+  .hero-dots { bottom: 172px; }
+  .hero-subtitle { font-size: .95rem; margin: 16px auto 20px; }
+  .hero-stat-card { padding: 10px 6px; }
+  .stat-number { font-size: 1.35rem; }
   .footer-bottom { flex-direction: column; text-align: center; }
   .news-filter-tabs { flex-wrap: wrap; }
-  /* .hero-body { margin-top: -2rem; } */
+  .team-card { padding: 22px 18px !important; }
 }
 @media (max-width: 575px) {
+  .hero-section {
+    height: calc(100dvh - 70px);
+    min-height: 590px;
+  }
   .hero-title   { font-size: 2.1rem; letter-spacing: -.5px; }
   .page-hero h1 { font-size: 1.8rem; }
   .section-heading { font-size: 1.5rem; }
   .hero-actions { flex-direction: column; align-items: center; }
   .hero-actions .btn { width: 100%; max-width: 300px; }
-  .hero-body { top:  -5rem; }
-  .hero-stats { top: -10rem;}
+  .hero-body { padding: 54px 0 150px; }
+  .hero-eyebrow {
+    font-size: .58rem;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    padding: 5px 14px;
+    width: 100%;
+    max-width: 100%;
+  }
+  .hero-subtitle { line-height: 1.55; }
+  .hero-actions { gap: 10px; }
+  .hero-stats { bottom: 130px; }
+  .hero-dots { bottom: 70px; }
+  .hero-stat-card { padding: 8px 5px; }
+  .stat-icon-wrap { margin-bottom: 4px; }
+  .stat-label { font-size: .62rem; }
 }
 
 /* ── ARTICLE / NEWS DETAIL PAGES ───────────── */

@@ -3,56 +3,12 @@
    ============================================= */
 
 /* ── PAGE LOADER (inject once, used everywhere) ── */
-(function injectLoader() {
-  const loader = document.createElement('div');
-  loader.id = 'pageLoader';
-  loader.innerHTML = `
-    <div class="loader-bar"></div>
-    <div class="loader-logo">
-      <i class="bi bi-mortarboard-fill"></i>
-      <div>
-        <span>ST PETER</span>
-        <small>COLLEGE OF EDUCATION</small>
-      </div>
-    </div>
-    <div class="loader-dots">
-      <span></span><span></span><span></span>
-    </div>
-  `;
-  document.body.insertBefore(loader, document.body.firstChild);
-})();
-
 /* Hide loader once DOM + all assets are ready */
-window.addEventListener('load', () => {
-  const loader = document.getElementById('pageLoader');
-  if (loader) {
-    setTimeout(() => loader.classList.add('hide'), 300);
-  }
-});
-
 /* ── NAVIGATION LINK LOADING ─────────────────
    Shows the full-page loader whenever the user
    clicks any internal <a> button/link that
    navigates to another page.
 ─────────────────────────────────────────────── */
-function showLoaderOnNav(anchor) {
-  const href = anchor.getAttribute('href');
-  if (!href || href === '#' || href.startsWith('http') ||
-      href.startsWith('mailto') || href.startsWith('tel') ||
-      anchor.getAttribute('target') === '_blank') return;
-
-  const loader = document.getElementById('pageLoader');
-  if (loader) {
-    // Reset bar animation by cloning
-    const bar = loader.querySelector('.loader-bar');
-    if (bar) {
-      const newBar = bar.cloneNode();
-      bar.replaceWith(newBar);
-    }
-    loader.classList.remove('hide');
-  }
-}
-
 /* ── BTN LOADING HELPER ──────────────────────
    Wraps button text in .btn-text, adds spinner
    class. Returns a restore function.
@@ -77,21 +33,24 @@ function setBtnLoading(btn, loadingText = '') {
 /* ══════════════════════════════════════════════
    DOMCONTENTLOADED — main logic
 ══════════════════════════════════════════════ */
+function showBtnSuccess(btn, duration = 1400) {
+  if (!btn) return;
+  const original = btn.innerHTML;
+  btn.classList.remove('btn-loading');
+  btn.classList.add('btn-success-state');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="bi bi-check-lg"></i>';
+
+  setTimeout(() => {
+    btn.classList.remove('btn-success-state');
+    btn.disabled = false;
+    btn.innerHTML = original;
+  }, duration);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 
   /* ── 1. WIRE ALL NAVIGATION BUTTONS/LINKS ─── */
-  document.querySelectorAll('a.btn, a.btn-link-custom, a.btn-primary-custom, a.footer-brand').forEach(a => {
-    a.addEventListener('click', () => showLoaderOnNav(a));
-  });
-  /* Also catch plain <a> nav-links in the navbar */
-  document.querySelectorAll('.navbar-nav .nav-link, .breadcrumb-item a').forEach(a => {
-    a.addEventListener('click', () => showLoaderOnNav(a));
-  });
-  /* Sidebar article links */
-  document.querySelectorAll('.sidebar-link, .btn-link-custom').forEach(a => {
-    a.addEventListener('click', () => showLoaderOnNav(a));
-  });
-
   /* ── 2. NAVBAR SCROLL EFFECT ─────────────── */
   const nav = document.getElementById('mainNav');
   if (nav) {
@@ -125,6 +84,26 @@ document.addEventListener('DOMContentLoaded', () => {
   waBtn.innerHTML = '<i class="bi bi-whatsapp"></i>';
   document.body.appendChild(waBtn);
 
+  /* ── 4B. MOBILE FOOTER ACTION BUTTONS ────── */
+  const mobileFooter = document.createElement('nav');
+  mobileFooter.className = 'mobile-footer-buttons';
+  mobileFooter.setAttribute('aria-label', 'Quick actions');
+  mobileFooter.innerHTML = `
+    <a href="admissions.html" class="mobile-footer-btn mobile-footer-primary">
+      <i class="bi bi-pencil-square"></i>
+      <span>Apply</span>
+    </a>
+    <a href="tel:+250788123456" class="mobile-footer-btn">
+      <i class="bi bi-telephone-fill"></i>
+      <span>Call</span>
+    </a>
+    <a href="https://wa.me/250788123456" class="mobile-footer-btn mobile-footer-whatsapp" target="_blank" rel="noopener noreferrer">
+      <i class="bi bi-whatsapp"></i>
+      <span>WhatsApp</span>
+    </a>
+  `;
+  document.body.appendChild(mobileFooter);
+
   /* ── 5. DARK / LIGHT MODE TOGGLE ─────────── */
   const themeToggle = document.getElementById('themeToggle');
   const themeIcon   = document.getElementById('themeIcon');
@@ -156,7 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (filterBtns.length) {
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
-        const restore = setBtnLoading(btn);
         filterBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
@@ -169,8 +147,6 @@ document.addEventListener('DOMContentLoaded', () => {
             item.classList.add('hidden');
           }
         });
-        // Restore after tiny delay (visual feedback)
-        setTimeout(restore, 400);
       });
     });
   }
@@ -209,12 +185,14 @@ document.addEventListener('DOMContentLoaded', () => {
             showToast('Application submitted! We will contact you soon.', 'success');
             appForm.reset();
             appForm.classList.remove('was-validated');
+            restore();
+            showBtnSuccess(btn);
           })
           .catch(err => {
             console.error('EmailJS error:', err);
             showToast('Send failed. Please try again or email us directly.', 'error');
-          })
-          .finally(restore);
+            restore();
+          });
       } catch (e) {
         showToast('EmailJS not configured yet. See EMAILJS-SETUP.md.', 'error');
         restore();
@@ -250,12 +228,14 @@ document.addEventListener('DOMContentLoaded', () => {
             showToast('Message sent! We\'ll get back to you within 24 hours.', 'success');
             contactForm.reset();
             contactForm.classList.remove('was-validated');
+            restore();
+            showBtnSuccess(btn);
           })
           .catch(err => {
             console.error('EmailJS error:', err);
             showToast('Send failed. Please try again or call us directly.', 'error');
-          })
-          .finally(restore);
+            restore();
+          });
       } catch (e) {
         showToast('EmailJS not configured yet. See EMAILJS-SETUP.md.', 'error');
         restore();
@@ -284,6 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         restore();
         showToast('You\'ve subscribed to our newsletter!', 'success');
+        showBtnSuccess(button);
         input.value = '';
       }, 1200);
     });
