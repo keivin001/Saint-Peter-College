@@ -84,25 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
   waBtn.innerHTML = '<i class="bi bi-whatsapp"></i>';
   document.body.appendChild(waBtn);
 
-  /* ── 4B. MOBILE FOOTER ACTION BUTTONS ────── */
-  const mobileFooter = document.createElement('nav');
-  mobileFooter.className = 'mobile-footer-buttons';
-  mobileFooter.setAttribute('aria-label', 'Quick actions');
-  mobileFooter.innerHTML = `
-    <a href="admissions.html" class="mobile-footer-btn mobile-footer-primary">
-      <i class="bi bi-pencil-square"></i>
-      <span>Apply</span>
-    </a>
-    <a href="tel:+250788123456" class="mobile-footer-btn">
-      <i class="bi bi-telephone-fill"></i>
-      <span>Call</span>
-    </a>
-    <a href="https://wa.me/250788123456" class="mobile-footer-btn mobile-footer-whatsapp" target="_blank" rel="noopener noreferrer">
-      <i class="bi bi-whatsapp"></i>
-      <span>WhatsApp</span>
-    </a>
-  `;
-  document.body.appendChild(mobileFooter);
+
 
   /* ── 5. DARK / LIGHT MODE TOGGLE ─────────── */
   const themeToggle = document.getElementById('themeToggle');
