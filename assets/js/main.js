@@ -13,6 +13,23 @@
    Wraps button text in .btn-text, adds spinner
    class. Returns a restore function.
 ─────────────────────────────────────────────── */
+const topBar = document.querySelector(".top-bar");
+const navbar = document.querySelector(".navbar");
+
+window.addEventListener("scroll", function () {
+
+    if (window.scrollY > 50) {
+        topBar.classList.add("hide");
+        navbar.classList.add("move-up");
+    } else {
+        topBar.classList.remove("hide");
+        navbar.classList.remove("move-up");
+    }
+
+});
+// his is the end of the top-bar info
+
+
 function setBtnLoading(btn, loadingText = '') {
   if (!btn || btn.disabled) return () => {};
   const original = btn.innerHTML;

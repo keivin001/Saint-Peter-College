@@ -1,4 +1,4 @@
-# robots.txt — St Peter College of Education
+# robots.txt — St Peter College of Shyogwe
 # https://www.stpetercollege.rw
 
 User-agent: *
